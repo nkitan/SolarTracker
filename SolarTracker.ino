@@ -1,7 +1,5 @@
 #include <Servo.h> // include Servo library 
 
-
-
 //--------------------------------------------------------------------------------//
 // This is partially submitted as requirement for Tinkering Lab exercise 
 // Name of the Students
