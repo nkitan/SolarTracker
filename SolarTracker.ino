@@ -1,3 +1,6 @@
+#include <Servo.h> // include Servo library 
+
+
 
 //--------------------------------------------------------------------------------//
 // This is partially submitted as requirement for Tinkering Lab exercise 
@@ -9,18 +12,17 @@
 // -------------
 // github : https://github.com/nkitan/SolarTracker
 // ------------------------------------------------------------------------------//
-#include <Servo.h> // include Servo library 
 
 // 180 horizontal MAX
-Servo horizontal; // horizontal servo
-int servoh = 180;   // 90;     // stand horizontal servo
+Servo Horizontal; // horizontal servo
+int ServoHorizontal = 180;   // 90;     // stand horizontal servo
 
 int servohLimitHigh = 180;
 int servohLimitLow = 65;
 
 // 65 degrees MAX
-Servo vertical;   // vertical servo 
-int servov = 45;    //   90;     // stand vertical servo
+Servo Vertical;   // vertical servo 
+int ServoVertical = 45;    //   90;     // stand vertical servo
 
 int servovLimitHigh = 80;
 int servovLimitLow = 15;
@@ -36,95 +38,97 @@ int ldrrd = 0; //ldr down rigt - TOP RIGHT
 void setup()
 {
   Serial.begin(9600);
-// servo connections
-// name.attacht(pin);
-  horizontal.attach(9); 
-  vertical.attach(10);
-  horizontal.write(180);
-  vertical.write(45);
-  delay(3000);
+  
+   // SERVO CONNECTIONS
+  
+   Horizontal.attach(9); 
+   Vertical.attach(10);
+   Horizontal.write(180);
+   Vertical.write(45);
+   delay(3000);
 }
 
 void loop() 
 {
-  int lt = analogRead(ldrlt); // top left
-  int rt = analogRead(ldrrt); // top right
-  int ld = analogRead(ldrld); // down left
-  int rd = analogRead(ldrrd); // down rigt
+  int debug = 1;
+  int TopLeft = analogRead(ldrlt); // top left
+  int TopRight  = analogRead(ldrrt); // top right
+  int DownLeft   = analogRead(ldrld); // down left
+  int DownRight = analogRead(ldrrd); // down rigt
+  int DelayTime = 10;  // DELAY TIME
+  int Tolerance = 50;    // TOLERANCE
   
-  // int dtime = analogRead(4)/20; // read potentiometers  
-  // int tol = analogRead(5)/4;
-  int dtime = 10;
-  int tol = 50;
-  
-  int avt = (lt + rt) / 2; // average value top
-  int avd = (ld + rd) / 2; // average value down
-  int avl = (lt + ld) / 2; // average value left
-  int avr = (rt + rd) / 2; // average value right
+  int TopAverage = (TopLeft + TopRight) / 2; // average value top
+  int DownAverage = (DownLeft + DownRight) / 2; // average value down
+  int LeftAverage = (TopLeft + DownLeft) / 2; // average value left
+  int RightAverage = (TopRight + DownRight) / 2; // average value right
 
-  int dvert = avt - avd; // check the diffirence of up and down
-  int dhoriz = avl - avr;// check the diffirence og left and rigt
-  
-  
-  Serial.print(avt);
-  Serial.print(" ");
-  Serial.print(avd);
-  Serial.print(" ");
-  Serial.print(avl);
-  Serial.print(" ");
-  Serial.print(avr);
-  Serial.print("   ");
-  Serial.print(dtime);
-  Serial.print("   ");
-  Serial.print(tol);
+  int VerticalDifference = TopAverage - DownAverage; // check the diffirence of up and down
+  int HorizontalDifference = LeftAverage - RightAverage;// check the diffirence og left and rigt
+
+
+
+  // DEBUGGING
+                                                          
+  if(debug == 0){                                             // ENABLING DEBUGGING CAUSES SLOW EXECUTION 
+  Serial.print(" TAVG->");  
+  Serial.print(TopAverage);             
+  Serial.print(" DAVG->"); 
+  Serial.print(DownAverage);
+  Serial.print(" LAVG->");
+  Serial.print(LeftAverage);
+  Serial.print(" RAVG->");
+  Serial.print(RightAverage);
+  Serial.print("  DEL->");
+  Serial.print(DelayTime);
+  Serial.print("  TOL->");
+  Serial.print(Tolerance);
   Serial.println(" ");
-  
+  }
     
-  if (-1*tol > dvert || dvert > tol) // check if the diffirence is in the tolerance else change vertical angle
-  {
-  if (avt > avd)
-  {
-    servov = ++servov;
-     if (servov > servovLimitHigh) 
-     { 
-      servov = servovLimitHigh;
-     }
-  }
-  else if (avt < avd)
-  {
-    servov= --servov;
-    if (servov < servovLimitLow)
-  {
-    servov = servovLimitLow;
-  }
-  }
-  vertical.write(servov);
-  }
+  // CHECK FOR VERTICAL SERVO
   
-  if (-1*tol > dhoriz || dhoriz > tol) // check if the diffirence is in the tolerance else change horizontal angle
+  
+  if (-1* Tolerance > VerticalDifference || VerticalDifference > Tolerance) // check if the diffirence is in the tolerance else change vertical angle
   {
-  if (avl > avr)
-  {
-    servoh = --servoh;
-    if (servoh < servohLimitLow)
+   if (TopAverage > DownAverage)
     {
-    servoh = servohLimitLow;
+    ServoVertical = ++ServoVertical;                           // INCREMENTS SERVO VERTICAL
+     if (ServoVertical > servovLimitHigh)  
+      ServoVertical = servovLimitHigh;                  // LIMITS SERVO TO UPPER LIMIT
     }
+    else if (TopAverage < DownAverage)
+    {
+     ServoVertical= --ServoVertical;
+    if (ServoVertical < servovLimitLow)
+       ServoVertical = servovLimitLow;                  // LIMITS SERVO TO LOWER LIMIT
+    }
+   Vertical.write(ServoVertical);
   }
-  else if (avl < avr)
-  {
-    servoh = ++servoh;
-     if (servoh > servohLimitHigh)
-     {
-     servoh = servohLimitHigh;
-     }
-  }
-  else if (avl = avr)
-  {
-    // nothing
-  }
-  horizontal.write(servoh);
-  }
-   delay(dtime);
 
+
+  // CHECK FOR HORIZONTAL SERVO
+  
+  
+  if (-1*Tolerance > HorizontalDifference || HorizontalDifference > Tolerance) // check if the diffirence is in the tolerance else change horizontal angle
+  {
+  if (LeftAverage > RightAverage)
+  {
+    ServoHorizontal = --ServoHorizontal;
+    if (ServoHorizontal < servohLimitLow)
+     ServoHorizontal = servohLimitLow;                         
+   }
+  else if (LeftAverage < RightAverage)
+  {
+    ServoHorizontal = ++ServoHorizontal;
+     if (ServoHorizontal > servohLimitHigh)
+     ServoHorizontal = servohLimitHigh;
+  }
+  else if (LeftAverage == RightAverage)
+  {
+    ServoHorizontal = 90;
+  }
+  Horizontal.write(ServoHorizontal);
+  }
+   delay(DelayTime);
 }
