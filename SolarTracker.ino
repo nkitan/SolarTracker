@@ -108,25 +108,27 @@ void loop()
   // CHECK FOR HORIZONTAL SERVO
   
   
-  if (-1*Tolerance > HorizontalDifference || HorizontalDifference > Tolerance) // check if the diffirence is in the tolerance else change horizontal angle
+ if (-1*Tolerance > HorizontalDifference || HorizontalDifference > Tolerance) // check if the diffirence is in the tolerance else change horizontal angle
   {
+  
   if (LeftAverage > RightAverage)
   {
     ServoHorizontal = --ServoHorizontal;
     if (ServoHorizontal < servohLimitLow)
      ServoHorizontal = servohLimitLow;                         
    }
+    
   else if (LeftAverage < RightAverage)
   {
     ServoHorizontal = ++ServoHorizontal;
      if (ServoHorizontal > servohLimitHigh)
      ServoHorizontal = servohLimitHigh;
-  }
+   }
+    
   else if (LeftAverage == RightAverage)
-  {
-    ServoHorizontal = 90;
-  }
-  Horizontal.write(ServoHorizontal);
+    ServoHorizontal = ServoHorizontal;
+   Horizontal.write(ServoHorizontal);
+   
   }
    delay(DelayTime);
 }
