@@ -7,7 +7,7 @@
 // Anvesh Patel
 // Aswin Suresh
 // -------------
-// github : 
+// github : https://github.com/nkitan/SolarTracker
 // ------------------------------------------------------------------------------//
 #include <Servo.h> // include Servo library 
 
