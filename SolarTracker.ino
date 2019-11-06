@@ -29,11 +29,11 @@ int servovLimitLow = 15;
 
 
 // LDR pin connections
-//  name  = analogpin;
-int ldrlt = 3; //LDR top left - BOTTOM LEFT    <--- BDG      
-int ldrrt = 1; //LDR top rigt - BOTTOM RIGHT 
-int ldrld = 2; //LDR down left - TOP LEFT
-int ldrrd = 0; //ldr down rigt - TOP RIGHT                  
+
+int TopLeftLDR = 3; //LDR top left - BOTTOM LEFT    <--- BDG      
+int TopRightLDR = 1; //LDR top rigt - BOTTOM RIGHT 
+int DownLeftLDR = 2; //LDR down left - TOP LEFT
+int DownRightLDR = 0; //ldr down rigt - TOP RIGHT                  
 
 void setup()
 {
@@ -41,7 +41,7 @@ void setup()
   
    // SERVO CONNECTIONS
   
-   Horizontal.attach(9); 
+   Horizontal.attach(9);   // SERVONAME.ATTACH(PIN);
    Vertical.attach(10);
    Horizontal.write(180);
    Vertical.write(45);
@@ -51,10 +51,10 @@ void setup()
 void loop() 
 {
   int debug = 1;
-  int TopLeft = analogRead(ldrlt); // top left
-  int TopRight  = analogRead(ldrrt); // top right
-  int DownLeft   = analogRead(ldrld); // down left
-  int DownRight = analogRead(ldrrd); // down rigt
+  int TopLeft = analogRead(TopLeftLDR); // top left
+  int TopRight  = analogRead(TopRightLDR); // top right
+  int DownLeft   = analogRead(DownLeftLDR); // down left
+  int DownRight = analogRead(DownRightLDR); // down rigt
   int DelayTime = 10;  // DELAY TIME
   int Tolerance = 50;    // TOLERANCE
   
