@@ -2,11 +2,7 @@
 
 //--------------------------------------------------------------------------------//
 // This is partially submitted as requirement for Tinkering Lab exercise 
-// Name of the Students
-// Ankit Das
-// Arnav Gupta
-// Anvesh Patel
-// Aswin Suresh
+// Coded by Ankit Das @ github.com/nkitan
 // -------------
 // github : https://github.com/nkitan/SolarTracker
 // ------------------------------------------------------------------------------//
