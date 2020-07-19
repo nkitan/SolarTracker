@@ -7,6 +7,12 @@
 // github : https://github.com/nkitan/SolarTracker
 // ------------------------------------------------------------------------------//
 
+int debug = 0;        // Turn debugging on or off
+int DelayTime = 10;   // delay time (in ms)
+int Tolerance = 50;   // tolerance
+
+
+
 // 180 horizontal MAX
 Servo Horizontal; // horizontal servo
 int ServoHorizontal = 180;   // 90;     // stand horizontal servo
@@ -44,13 +50,11 @@ void setup()
 
 void loop() 
 {
-  int debug = 1;
+
   int TopLeft = analogRead(TopLeftLDR); // top left
   int TopRight  = analogRead(TopRightLDR); // top right
   int DownLeft   = analogRead(DownLeftLDR); // down left
   int DownRight = analogRead(DownRightLDR); // down rigt
-  int DelayTime = 10;  // DELAY TIME
-  int Tolerance = 50;    // TOLERANCE
   
   int TopAverage = (TopLeft + TopRight) / 2; // average value top
   int DownAverage = (DownLeft + DownRight) / 2; // average value down
@@ -64,7 +68,7 @@ void loop()
 
   // DEBUGGING
                                                           
-  if(debug == 0){                                             // ENABLING DEBUGGING CAUSES SLOW EXECUTION 
+  if(debug){                                             // ENABLING DEBUGGING CAUSES SLOW EXECUTION 
   Serial.print(" TAVG->");  
   Serial.print(TopAverage);             
   Serial.print(" DAVG->"); 
