@@ -91,13 +91,13 @@ void loop()
   {
    if (TopAverage > DownAverage)
     {
-    ServoVertical = ++ServoVertical;                           // INCREMENTS SERVO VERTICAL
+    ServoVertical++;                           // INCREMENTS SERVO VERTICAL
      if (ServoVertical > servovLimitHigh)  
       ServoVertical = servovLimitHigh;                  // LIMITS SERVO TO UPPER LIMIT
     }
     else if (TopAverage < DownAverage)
     {
-     ServoVertical= --ServoVertical;
+     ServoVertical--;
     if (ServoVertical < servovLimitLow)
        ServoVertical = servovLimitLow;                  // LIMITS SERVO TO LOWER LIMIT
     }
@@ -113,20 +113,19 @@ void loop()
   
   if (LeftAverage > RightAverage)
   {
-    ServoHorizontal = --ServoHorizontal;
+    ServoHorizontal--;
     if (ServoHorizontal < servohLimitLow)
      ServoHorizontal = servohLimitLow;                         
    }
     
   else if (LeftAverage < RightAverage)
   {
-    ServoHorizontal = ++ServoHorizontal;
+     ServoHorizontal++;
      if (ServoHorizontal > servohLimitHigh)
      ServoHorizontal = servohLimitHigh;
    }
     
   else if (LeftAverage == RightAverage)
-    ServoHorizontal = ServoHorizontal;
    Horizontal.write(ServoHorizontal);
    
   }
