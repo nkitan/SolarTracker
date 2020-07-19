@@ -7,44 +7,43 @@
 // github : https://github.com/nkitan/SolarTracker
 // ------------------------------------------------------------------------------//
 
+
+// Switches 
 int debug = 0;        // Turn debugging on or off
 int DelayTime = 10;   // delay time (in ms)
 int Tolerance = 50;   // tolerance
 
 
-
-// 180 horizontal MAX
-Servo Horizontal; // horizontal servo
-int ServoHorizontal = 180;   // 90;     // stand horizontal servo
-
-int servohLimitHigh = 180;
-int servohLimitLow = 65;
-
-// 65 degrees MAX
-Servo Vertical;   // vertical servo 
-int ServoVertical = 45;    //   90;     // stand vertical servo
-
-int servovLimitHigh = 80;
-int servovLimitLow = 15;
-
-
 // LDR pin connections
-
 int TopLeftLDR = 3; //LDR top left - BOTTOM LEFT    <--- BDG      
 int TopRightLDR = 1; //LDR top rigt - BOTTOM RIGHT 
 int DownLeftLDR = 2; //LDR down left - TOP LEFT
-int DownRightLDR = 0; //ldr down rigt - TOP RIGHT                  
+int DownRightLDR = 0; //ldr down rigt - TOP RIGHT  
+
+
+Servo Horizontal; // horizontal servo
+Servo Vertical;   // vertical servo 
+
+// initialize with Starting positions
+int ServoHorizontal = 180;  
+int ServoVertical = 45;
+
+// Servo Movement limits
+int servohLimitHigh = 180;
+int servohLimitLow = 65;
+int servovLimitHigh = 80;  
+int servovLimitLow = 15;
+                
 
 void setup()
 {
   Serial.begin(9600);
   
    // SERVO CONNECTIONS
-  
    Horizontal.attach(9);   // SERVONAME.ATTACH(PIN);
    Vertical.attach(10);
-   Horizontal.write(180);
-   Vertical.write(45);
+   Horizontal.write(ServoHorizontal);  // set servos to initial Positions
+   Vertical.write(ServoVertical);
    delay(3000);
 }
 
